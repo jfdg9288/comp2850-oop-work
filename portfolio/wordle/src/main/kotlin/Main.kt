@@ -1,3 +1,5 @@
+const val MAX_ATTEMPTS = 6
+
 fun main() {
     val words = try {
         readWordList("data/words.txt")
@@ -20,8 +22,7 @@ fun main() {
 
     println("Wordle: Guess the 5-letter word.\n")
 
-    val maxAttempts = 6
-    for (attempt in 1..maxAttempts) {
+    for (attempt in 1..MAX_ATTEMPTS) {
         val guess = obtainGuess(attempt) // ask user for input until valid
         val result = evaluateGuess(guess.lowercase(), target.lowercase())
         displayGuess(guess.lowercase(), result)
@@ -31,5 +32,5 @@ fun main() {
             return
         }
     }
-        println("\nOut of guesses! The word was \"$target\".")
+    println("\nOut of guesses! The word was \"$target\".")
 }

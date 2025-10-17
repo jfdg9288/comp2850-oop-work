@@ -2,16 +2,15 @@
 import java.io.File
 import kotlin.random.Random
 
-fun isValid(word: String): Boolean {
-    return word.length == 5 && word.all{it.isLetter()}
-}
+const val WORD_LENGTH = 5
 
-fun readWordList(filename: String): MutableList<String> {
-    return File(filename)
+fun isValid(word: String): Boolean = word.length == WORD_LENGTH && word.all{ it.isLetter() }
+
+fun readWordList(filename: String): MutableList<String> =
+    File(filename)
         .readLines()
         .map{ it.trim() } // remove whitespace
         .toMutableList()
-}
 
 fun pickRandomWord(words: MutableList<String>): String {
     val randNum = Random.nextInt(words.size)
@@ -21,18 +20,18 @@ fun pickRandomWord(words: MutableList<String>): String {
 fun obtainGuess(attempt: Int): String {
     while (true) {
         print("\nAttempt $attempt: ")
-        val input = readLine()?.trim()?.uppercase() ?: ""
+        val input = readLine().orEmpty().trim().uppercase()
         if (isValid(input)) return input
         println("Invalid word. Please enter exactly 5 letters")
     }
 }
 
 fun evaluateGuess(guess: String, target: String): List<Int> {
-    val result = MutableList(5) {0} // Starts all letters as 0
+    val result = MutableList(WORD_LENGTH) { 0 } //Starts all as 0
     val targetChars = target.toMutableList()
 
     // Check for exact matches
-    for (i in 0 until 5) {
+    for (i in 0 until WORD_LENGTH) {
         if (guess[i] == target[i]) {
             result[i] = 2
             targetChars[i] = '*' //mark this letter as used already
@@ -40,7 +39,7 @@ fun evaluateGuess(guess: String, target: String): List<Int> {
     }
 
     // Check for partial matches
-    for (i in 0 until 5) {
+    for (i in 0 until WORD_LENGTH) {
         if (result[i] == 0) { // Check if not already a green match
             val index = targetChars.indexOf(guess[i])
             if (index != -1) {
@@ -58,7 +57,7 @@ fun displayGuess(guess: String, matches: List<Int>) {
     val gray = "\u001B[37m"
     val reset = "\u001B[0m"
 
-    for (i in 0 until 5) {
+    for (i in 0 until WORD_LENGTH) {
         val colour = when (matches[i]) {
             2 -> green
             1 -> yellow
@@ -66,4 +65,5 @@ fun displayGuess(guess: String, matches: List<Int>) {
         }
         print("$colour${guess[i]}$reset")
     }
+    println()
 }
