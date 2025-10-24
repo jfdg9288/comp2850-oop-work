@@ -24,8 +24,8 @@ fun main() {
 
     for (attempt in 1..MAX_ATTEMPTS) {
         val guess = obtainGuess(attempt) // ask user for input until valid
-        val result = evaluateGuess(guess.lowercase(), target.lowercase())
-        displayGuess(guess.lowercase(), result)
+        val result = evaluateGuess(guess, target.uppercase())
+        displayGuess(guess, result)
 
         if (result.all { it == 2 }) {
             print("\nYou guessed the word \"$target\" in $attempt attempt${if (attempt == 1) "" else "s"}!")
