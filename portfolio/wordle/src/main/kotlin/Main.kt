@@ -3,7 +3,7 @@ const val MAX_ATTEMPTS = 6
 fun main() {
     val words = try {
         readWordList("data/words.txt")
-    } catch (e: Exception) {
+    } catch (e: IllegalStateException) {
         println("Error: Could not read word file (${e.message}).")
         return
     }
@@ -33,4 +33,5 @@ fun main() {
         }
     }
     println("\nOut of guesses! The word was \"$target\".")
+    println()
 }

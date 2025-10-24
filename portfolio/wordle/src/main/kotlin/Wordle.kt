@@ -4,12 +4,12 @@ import kotlin.random.Random
 
 const val WORD_LENGTH = 5
 
-fun isValid(word: String): Boolean = word.length == WORD_LENGTH && word.all{ it.isLetter() }
+fun isValid(word: String): Boolean = word.length == WORD_LENGTH && word.all { it.isLetter() }
 
 fun readWordList(filename: String): MutableList<String> =
     File(filename)
         .readLines()
-        .map{ it.trim() } // remove whitespace
+        .map { it.trim() } // remove whitespace
         .toMutableList()
 
 fun pickRandomWord(words: MutableList<String>): String {
@@ -19,22 +19,22 @@ fun pickRandomWord(words: MutableList<String>): String {
 
 fun obtainGuess(attempt: Int): String {
     while (true) {
-        print("\nAttempt $attempt: ")
+        print("Attempt $attempt: ")
         val input = readLine().orEmpty().trim().uppercase()
         if (isValid(input)) return input
-        println("Invalid word. Please enter exactly 5 letters")
+        println("Invalid word. Please enter exactly 5 letters\n")
     }
 }
 
 fun evaluateGuess(guess: String, target: String): List<Int> {
-    val result = MutableList(WORD_LENGTH) { 0 } //Starts all as 0
+    val result = MutableList(WORD_LENGTH) { 0 } // Starts all as 0
     val targetChars = target.toMutableList()
 
     // Check for exact matches
     for (i in 0 until WORD_LENGTH) {
         if (guess[i] == target[i]) {
             result[i] = 2
-            targetChars[i] = '*' //mark this letter as used already
+            targetChars[i] = '*' // mark this letter as used already
         }
     }
 
@@ -48,7 +48,7 @@ fun evaluateGuess(guess: String, target: String): List<Int> {
             }
         }
     }
-        return result
+    return result
 }
 
 fun displayGuess(guess: String, matches: List<Int>) {
@@ -65,5 +65,5 @@ fun displayGuess(guess: String, matches: List<Int>) {
         }
         print("$colour${guess[i]}$reset")
     }
-    println()
+    println("\n")
 }
