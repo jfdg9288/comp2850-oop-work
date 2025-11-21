@@ -1,3 +1,4 @@
+import kotlin.system.exitProcess
 const val MAX_ATTEMPTS = 6
 
 fun main() {
@@ -5,20 +6,19 @@ fun main() {
         readWordList("data/words.txt")
     } catch (e: IllegalStateException) {
         println("Error: Could not read word file (${e.message}).")
-        return
+        exitProcess(1)
     }
 
     if (words.isEmpty()) {
         println("Error: Word file contains no words.")
-        return
+        exitProcess(1)
     }
 
-    val target = try {
-        pickRandomWord(words)
-    } catch (e: IllegalArgumentException) {
-        println("Error: No words available to choose from.")
-        return
-    }
+    val target = pickRandomWord(words)
+    //} catch (e: IllegalArgumentException) {
+    //    println("Error: No words available to choose from.")
+    //    exitProcess(1)
+    //}
 
     println("Wordle: Guess the 5-letter word.\n")
 

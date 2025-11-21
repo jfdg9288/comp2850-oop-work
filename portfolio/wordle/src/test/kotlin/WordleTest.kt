@@ -11,6 +11,7 @@ class WordleTest : StringSpec({
         isValid("APPL") shouldBe false
         isValid("12345") shouldBe false
         isValid("APPL3") shouldBe false
+        // add test for longer than 5 letters
         isValid("") shouldBe false
     }
 
@@ -70,5 +71,8 @@ class WordleTest : StringSpec({
 
         // All yellows
         evaluateGuess("EABCD", "ABCDE") shouldBe listOf(1, 1, 1, 1, 1)
+
+        // All greys
+        evaluateGuess("FGHIJ", "ABCDE") shouldBe listOf(0, 0, 0, 0, 0)
     }
 })
